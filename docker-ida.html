@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+	<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="author" content="Intezer Labs">
+
+
+        <title>Intezer - Docker IDA</title>
+
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/theme/css/style.css">
+
+        <!-- Custom CSS -->
+        	<link rel="stylesheet" href="/theme/css/colors/blue.css" id="colors">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Intezer">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/docker-ida.html">
+	<meta property="og:title" content="Docker IDA">
+	<meta property="og:description" content="">
+	   <meta property="og:image" content="/images/guilherme-toti.jpg">
+	<meta property="article:published_time" content="2016-05-17 10:00:00+03:00">
+	</head>
+	<body>
+		<header id="header">
+			<!-- Container -->
+			<div class="container">
+				<!-- Logo / Mobile Menu -->
+				<div class="three columns">
+					<div id="logo">
+						<h1><a href="/">Intezer</a></h1>
+					</div>
+				</div>
+				<!-- Navigation
+				================================================== -->
+				<div class="thirteen columns">
+					
+					<nav id="navigation" class="menu">
+						<ul id="responsive">
+
+							<li><a href="/">Home</a></li>
+
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- Container / End -->
+		</header>
+		<!-- Header / End -->
+		
+		<div id="content-wrapper">
+			<section id="titlebar">
+				<!-- Container -->
+				<div class="container">
+					<div class="sixteen columns">						
+						<nav id="breadcrumbs">
+							<ul>
+								<li>You are here:</li>
+								<li><a href="/">Home</a></li>
+<li><a href="/category/Reverse Engineering Tools">Reverse Engineering Tools</a></li>
+<li>Docker IDA</li>
+							</ul>
+						</nav>
+					</div>
+
+				</div>
+				<!-- Container / End -->
+			</section>
+
+			<div class="container">
+	<div class="twelve alt columns">
+<article class="post" style="margin: 0; border: 0;">
+	
+	<div class="post-format">
+		<div class="circle"><i class="icon-pencil"></i><span></span></div>
+	</div>
+
+	<section class="post-content">
+
+		<header class="meta">
+			<h2><a href="/docker-ida.html">Docker IDA</a></h2>
+			<ul>
+				<li>By <a href="/author/intezer-labs.html">Intezer Labs</a></li>
+				<li>Tue 17 May 2016</li>
+			</ul>
+		</header>
+
+		<p><strong>Introduction</strong></p>
+<p>Many companies deal with hundreds or thousands of suspicious threats per day. Currently, the only solution for dealing with mass-scale malware analysis are with sandboxes and simplistic static analysis tools. We are all aware that this type of analysis is not sufficient enough most of the time. You can get inconsistent results about files, or investigate a file with anti-VM or anti-debug techniques, which can often lead to a dead-end. If this is the case, it is necessary to reverse engineer code for deeper inspection and complex insights.
+Reverse engineering can get you accurate results about a file, but the issue is that it can be very time-consuming.
+For example, if you try to execute thousands of files in a sandbox and you are able to filter 80% of the files, your reverse engineer will have to go through each and every one of those unfiltered files manually which can be slow, frustrating, and exhausting. A different way to make this deep analysis process automated would make a huge impact in the malware analysis world.
+We at Intezer Labs, have developed a solution to this problem.</p>
+<p><strong>So why don't we scale this process?</strong></p>
+<p>The problem is that the current RE tools (e.g. IDA Pro) are not designed to work on a large-scale and performing reverse engineering at scale is not possible. IDA, for example, has a resource-heavy GUI and the terminal GUI is very challenging to use and automate. You cannot easily deploy IDA instances to a cluster of servers in a simple manner so many scripts, processes, and manual work would be involved.</p>
+<p><strong>Current Status</strong></p>
+<p>In order to find a solution to this situation, we first need to understand the current status. Let’s say the researcher has 1000 files to investigate and it takes the researcher 30 minutes to fully investigate a file. Currently, the researcher would have to take 1 file at a time and after 30 minutes they would be able to determine whether it’s a good or malicious file. If the researcher has 1000 files to investigate, to go over all of these files would take the researcher up to 3 weeks!</p>
+<p><strong>Our Solution</strong></p>
+<p>Since this is such a huge bottleneck in the, we came up with an idea for a new architecture. In the same scenario, but with our solution, the researcher again has 1000 files to investigate. The researcher researcher also has a cluster with 100 servers that can be useful for investigating the files. The researcher can deploy a deep analysis tool on the cluster, and then send to the cluster of servers 1000 files parallely. After 5 hours, the researcher will get all the results for each of the 1000 files. Now, all the researcher needs to do is to go over the results and understand the results the researcher received. In this architecture, the researcher is no longer the bottleneck of the investigation. We reduce the time of the total investigation, from 3 weeks, to only 5 hours!</p>
+<p>After realizing that this is what we wanted to do, we started thinking about how we can implement this kind of solution. We were inspired by the relatively new trend from the software development world which allows processing at scale -- containers.  Containers solve the problem of how to get software to run reliably when moved from one computing environment to another. This can be very useful when moving software from development environment to a test or production environment, and is oftenly used for quick deployment in highly scalable environments. We realized that right now, when the container solution is steady, we can use it in order to do what we would like to call “Large-Scale Reverse Engineering.” Our theory is, that if we combine the power of containers with the power of reverse engineering, we could finally achieve our goal of Large-Scale Reverse Engineering. Our solution saves time, money, and energy.</p>
+<p><strong>The Docker-IDA Project</strong></p>
+<p>In order to achieve our goal of deploying IDA in a container, we had to choose a container infrastructure. We chose Docker as our container technology, as Docker is the leading container software. It can wrap up a piece of software in a complete file system that includes everything it needs to run. We also chose IDA as our preferred reverse engineering tool because it is the most popular choice for many reverse engineers. Our primary goal was to make IDA work in a Docker container that would allow us to easily deploy the Docker image on a cluster of servers.
+There were many challenges in dockerizing IDA. For example, IDA is not designed to run automatically (also, IDAPython is not automatic enough because you have to run it inside a graphical IDA instance). Another challenge was that IDA Linux installation is very time consuming, usually full of errors, and we also wanted to embed useful libraries in the use of our IDAPython scripts.
+One of the challenges is that we had to create a special file in order to prevent IDA to ask for license acceptance before executing IDA.
+The reason that we decided to create this type of project, is because at Intezer we need to do deep analysis on a large amount of suspicious files. After research and development, we created this solution, and with it we were able to perform Large-Scale Reverse Engineering. We succeeded and called this project Docker-IDA.
+With Docker-IDA and the framework we created in hand, one could very easily create a docker image, deploy thousands of IDA instances, and have an automated reverse engineering experience.
+We decided to share the solution with the community, and Docker-IDA has been published in our GitHub repository.</p>
+<p><strong>Proof of Concept</strong></p>
+<p>In order to show you the power of Docker-IDA, we did a proof of concept on a large amount of files.
+We wanted to run an IDAPython script that would help us gain deep insight on many file samples. The script counts the amount of calls per API function, and according to the data it can give you the amount of calls for each “family” of APIs. For example, with the script, we would be able to know that a file has 40% calls to network functions, 30% I/O functions, and 30% crypto functions. This is something that we could not do in any static tool / sandbox accurately because we are not only checking the import table, but count the amount of calls for each function.
+For that, we gathered about 1 million malware samples from various online malware repositories.
+After, we created a cluster with 1000 servers. Then, we ran our script on our cluster of deployed Docker-IDA containers. 
+We got back the results in a short period of time, and now there are multiple ways to analyze the data and come to a useful conclusion. Here’s two examples we came up with that we can do with the data. </p>
+<ol>
+<li>
+<p>Let's say that the worst-case scenario for my organization is ransomware in our networks. As you all know this is a very common problem right now, and a lot of companies or personal users find themselves without their data and backups. So if I, as a researcher, need to detect if a sample is a ransomware, I need to check if it has the ability to encrypt files. but to be more accurate, the ability itself is not enough. We also want to check if there is an actual call to an encryption function.
+So back to our results, I can get a list of all the files that have direct calls to encryption functions, which has the potential to be ransomware. (This can be improved if we added known crypto signature scanning to the script, but again this is just a proof of concept)</p>
+</li>
+<li>
+<p>If I want to get all the samples that are potentially a worm, I can look for all the files that have more than 5% of their calls to network spreading functions. If more than 5% of the calls in the file’s code are network spreading functions, this file may be trying to move inside the network, and may potentially be acting like a worm.</p>
+</li>
+</ol>
+<p>If you want to point out all the samples that are probably worms, you have to do deep analysis for each file, or execute each file on sandbox and wait for the results. Both of those ways can take a very long time, and as you can see it is much better to use the Docker-IDA project.</p>
+<p>As you can see, the results of this specific implementation of Large-Scale Reverse Engineering, emphasize on the great value it can bring to incident response teams and security researchers.</p>
+<p><strong>How Can I Do This At Home?</strong></p>
+<p>The Docker-IDA project, including the Docker file which you can use in order to build the Docker image with, are available at Intezer Lab’s github repository. If any researcher or team wants to run an IDAPython script on a large amount of samples, they are most welcome to contact us. We have a cluster of IDA instances which already are already up and running.</p>
+<p>Thanks for reading and we hope you find Docker-IDA useful!</p>
+<p><a href="https://github.com/intezer/docker-ida">Docker-IDA GitHub Repository</a></p>
+<p><a href="https://github.com/intezer">Intezer Repository</a></p>
+<p><a href="info@intezer.com">Contact</a></p>
+
+
+<div class="sharing">
+</div>
+<hr>
+		
+	</section>
+	<div class="clearfix"></div>
+
+</article>
+
+	</div>
+
+	<!-- Sidebar -->
+	<div class="four columns">
+
+		
+	</div>
+			</div>
+			<!-- Container / End -->
+		</div>
+		<!-- Content Wrapper / End -->
+
+
+		<div id="footer-bottom">
+			<!-- Container -->
+			<div class="container">
+				<div class="eight columns">Blog powered by <a href="http://getpelican.com">Pelican</a></div>
+			</div>
+			<!-- Container / End -->
+		</div>
+		<!-- Footer Bottom / End -->
+		
+	<!-- Javascripts -->
+	<script src="/theme/js/jquery.min.js"></script>
+	</body>
+</html>
