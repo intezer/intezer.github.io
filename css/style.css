@@ -55,7 +55,7 @@
 	}
 
 	p, ul, ol, dl, table, blockquote {
-		margin: 0 0 2em 0;
+		margin: 0 0 1em 0;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -507,14 +507,14 @@
 		}
 
 		.button.special {
-			background: #83d3c9;
-			border-color: #83d3c9;
+			background: #2199ec;
+			border-color: #2199ec;
 			color: white !important;
 		}
 
 			.button.special:hover {
-				background: #96dad1 !important;
-				border-color: #96dad1 !important;
+				background: #49aaef !important;
+				border-color: #49aaef !important;
 			}
 
 		.button.fit {
@@ -530,7 +530,7 @@
 /* Wrapper */
 
 	.wrapper {
-		margin-bottom: 5em;
+		margin-bottom: 1%;
 		padding: 5em;
 	}
 
@@ -820,10 +820,10 @@
 /* Main */
 
 	#main {
-		background-image: url("images/dark-tl.svg"), url("images/dark-tr.svg"), url("images/dark-bl.svg"), url("images/dark-br.svg");
+		/*background-image: url("images/dark-tl.svg"), url("images/dark-tr.svg"), url("images/dark-bl.svg"), url("images/dark-br.svg");
 		background-position: top left, top right, bottom left, bottom right;
 		background-repeat: no-repeat;
-		background-size: 25em;
+		background-size: 25em;*/
 		padding: 7em 0;
 	}
 

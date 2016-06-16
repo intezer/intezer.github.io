@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Intezer</title><link>blog.intezer.com/</link><description></description><lastBuildDate>Thu, 26 May 2016 10:00:00 +0300</lastBuildDate><item><title>Docker IDA</title><link>blog.intezer.com/docker-ida</link><description>&lt;p&gt;&lt;head&gt;
+<rss version="2.0"><channel><title>Intezer</title><link>blog.intezer.com/</link><description></description><lastBuildDate>Thu, 16 Jun 2016 12:14:00 +0300</lastBuildDate><item><title>How to Defend Against IRONGATE-like malware?</title><link>blog.intezer.com/how-to-defend-against-irongate-like-malware</link><description>&lt;p&gt;&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="description" content="Python Malware"&gt;
+&lt;meta name="keywords" content="python, python malware, pyinstaller, yara signatures, malware analysis, malware, virustotal, fireeye, irongate, irongate malware"&gt;
+&lt;meta name="author" content="Intezer"&gt;
+&lt;/head&gt;
+&lt;strong&gt;How to Defend Against IRONGATE-like malware?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A lot of the recent buzz in the InfoSec community was about the &lt;a href="https://www.fireeye.com/blog/threat-research/2016/06/irongate_ics_malware.html"&gt;IRONGATE malware&lt;/a&gt;. IRONGATE was recently discovered by &lt;a href="https://www.fireeye.com/"&gt;FireEye&lt;/a&gt; while hunting for PyInstaller-crafted executables in &lt;a href="https://www.virustotal.com/"&gt;VirusTotal&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.pyinstaller.org/"&gt;PyInstaller&lt;/a&gt; is a program that converts Python scripts into stand-alone executables under Windows, Linux, and more. Due to the simplicity of Python development and the easy deployment of Python programs enabled by PyInstaller, malware authors are able to write sophisticated malware in no time.&lt;/p&gt;
+&lt;p&gt;But how can we defend against these kind of threats?
+We need to perform the following steps:&lt;/p&gt;
+&lt;ol style="margin-left:20px;"&gt;
+  &lt;li&gt;1. Identify PyInstaller executables&lt;/li&gt;
+  &lt;li&gt;2. Analyze the PyInstaller executable by reviewing its original Python script code&lt;/li&gt;
+  &lt;li&gt;3. Remediate according to the specific threat found&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Identifying PyInstaller Executables&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There's a YARA signature created by &lt;a href="https://blog.didierstevens.com/"&gt; Didier Stevens&lt;/a&gt; that can be used in either an automatic or a manual mode to detect PyInstaller files. This signature basically looks for a specific string which is unique to PyInstaller-crafted executables.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/Yara-Rules/rules/blob/master/malware/pyinstaller.yar"&gt;PyInstaller Yara Signature&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Analyzing The PyInstaller Executable&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To deal with PyInstaller files, we can extract the original Python source code from any PyInstaller file and then analyze the code to get an understanding about its purpose, maliciousness, and full threat potential.  &lt;/p&gt;
+&lt;p&gt;Unlike other executable binaries, for which we need to perform disassembly and review hard-to-read assembly code in order to fully analyze them, the process of analysis using PyInstaller is usually simple and fast. It fully exposes the entire Python code, making it easy to read.&lt;/p&gt;
+&lt;p&gt;Extracting the Python source code can be done by using the excellent &lt;a href="http://sourceforge.net/projects/pyinstallerextractor"&gt;pyinstxtractor project&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It is used by running the pyinstallerextractor script: &lt;strong&gt;python pyinstxtractor.py PYINSTALLER_TEST_FILE.exe&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now, in the directory where you run pyinstxtractor, you should have the Python source code available to you. The only thing left is to rapidly read the code and analyze what it's doing in your system.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remediation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Remediation for PyInstaller files is not especially different from any other cyber threats; it really depends on the security systems deployed in your organization, and the code of the threat itself.  &lt;/p&gt;
+&lt;p&gt;If you need any assistance regarding a specific case, we would be happy to help -- just visit our &lt;a href="http://www.intezer.com"&gt;website&lt;/a&gt; or contact us via email at &lt;a href="contact@intezer.com"&gt;contact@intezer.com&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Intezer Labs</dc:creator><pubDate>Thu, 16 Jun 2016 12:14:00 +0300</pubDate><guid isPermaLink="false">tag:,2016-06-16:blog.intezer.com/how-to-defend-against-irongate-like-malware</guid></item><item><title>Docker IDA</title><link>blog.intezer.com/docker-ida</link><description>&lt;p&gt;&lt;head&gt;
 &lt;meta charset="UTF-8"&gt;
 &lt;meta name="description" content="Docker IDA Large Scale Reverse Engineering"&gt;
 &lt;meta name="keywords" content="docker-ida, docker, docker ida"&gt;
