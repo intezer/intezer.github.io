@@ -16,16 +16,20 @@ We need to perform the following steps:&lt;/p&gt;
   &lt;li&gt;3. Remediate according to the specific threat found&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;strong&gt;Identifying PyInstaller Executables&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Identifying PyInstaller Executables&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;There's a YARA signature created by &lt;a href="https://blog.didierstevens.com/"&gt; Didier Stevens&lt;/a&gt; that can be used in either an automatic or a manual mode to detect PyInstaller files. This signature basically looks for a specific string which is unique to PyInstaller-crafted executables.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/Yara-Rules/rules/blob/master/malware/pyinstaller.yar"&gt;PyInstaller Yara Signature&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Analyzing The PyInstaller Executable&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Analyzing The PyInstaller Executable&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;To deal with PyInstaller files, we can extract the original Python source code from any PyInstaller file and then analyze the code to get an understanding about its purpose, maliciousness, and full threat potential.  &lt;/p&gt;
 &lt;p&gt;Unlike other executable binaries, for which we need to perform disassembly and review hard-to-read assembly code in order to fully analyze them, the process of analysis using PyInstaller is usually simple and fast. It fully exposes the entire Python code, making it easy to read.&lt;/p&gt;
 &lt;p&gt;Extracting the Python source code can be done by using the excellent &lt;a href="http://sourceforge.net/projects/pyinstallerextractor"&gt;pyinstxtractor project&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;It is used by running the pyinstallerextractor script: &lt;strong&gt;python pyinstxtractor.py PYINSTALLER_TEST_FILE.exe&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It is used by running the pyinstallerextractor script: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;pyinstxtractor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;PYINSTALLER_TEST_FILE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Now, in the directory where you run pyinstxtractor, you should have the Python source code available to you. The only thing left is to rapidly read the code and analyze what it's doing in your system.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Remediation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Remediation&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Remediation for PyInstaller files is not especially different from any other cyber threats; it really depends on the security systems deployed in your organization, and the code of the threat itself.  &lt;/p&gt;
 &lt;p&gt;If you need any assistance regarding a specific case, we would be happy to help -- just visit our &lt;a href="http://www.intezer.com"&gt;website&lt;/a&gt; or contact us via email at &lt;a href="contact@intezer.com"&gt;contact@intezer.com&lt;/a&gt;&lt;/p&gt;</summary></entry><entry><title>Docker IDA</title><link href="blog.intezer.com/docker-ida" rel="alternate"></link><published>2016-05-26T10:00:00+03:00</published><author><name>Intezer Labs</name></author><id>tag:,2016-05-26:blog.intezer.com/docker-ida</id><summary type="html">&lt;p&gt;&lt;head&gt;
 &lt;meta charset="UTF-8"&gt;
